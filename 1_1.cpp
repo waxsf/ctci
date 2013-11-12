@@ -1,33 +1,28 @@
 #include<iostream>
-#include<cstring>
+#include<string>
+
 using namespace std;
 
 
-bool isUnique(string s)
-{
-	bool check[256];
-	memset(check,false,256);
-	int len = s.length();
-	int c;
-	for(int i=0; i<len; i++)
-	{
-		c = int(s[i]);
-		if(check[c])
-		{
+bool isUniq(string s){
+	bool hash_table[256];
+	memset(hash_table,0,sizeof(hash_table));
+	int n;
+	for(int i=0;i<s.length();i++){
+		n = s[i];
+		if(hash_table[n] == true){
 			return false;
 		}
-		else
-		{
-			check[c] = true; 
+		else{
+			hash_table[n] = true;
 		}
 	}
 	return true;
 }
 
-int main()
-{
-	string s,result;
+int main(){
+	string s;
 	cin>>s;
-	result = isUnique(s) ? "True" : "False";
-	cout<<result<<endl;
+	cout<<isUniq(s)<<endl;
+	return 0;
 }

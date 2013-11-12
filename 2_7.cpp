@@ -1,21 +1,24 @@
 #include<iostream>
 #include<cstring>
+#include<string>
+#include<stack>
 using namespace std;
 
 typedef struct node
 {
-	int data;
+	string data;
 	node *next;
 }node;
 
-node* init(int a[], int n)
+node* init(string s, int n)
 {
 	node *head,*p;
 	for(int i=0; i<n; i++)
 	{
 		node *newNode = new node();
 		
-		newNode->data = a[i];
+		newNode->data = s[i];
+		newNode->next = NULL;
 		
 		if(i == 0)
 		{
@@ -42,57 +45,44 @@ void print(node *head)
 	}
 }
 
-node* partition(node *head, int x)
+bool isPalindrome(node *head)
 {
-	node *beforeStart=NULL;
-	node *afterStart=NULL;
-	node *beforeEnd = NULL;
-	node *afterEnd=NULL;
-	node *p;
+	node *p,*q;
+	stack<string> content;
 	p = head;
-	while(p)
+	q = head;	
+
+	while(q && q->next)
 	{
-		node *nd = new node();
-		nd->data = p->data;
-		if(p->data < x )
-		{
-			if(beforeStart == NULL)
-			{
-				beforeStart = nd;
-				beforeEnd = nd;
-			}
-			else
-			{
-				beforeEnd->next = nd;
-				beforeEnd = nd;
-			}
-		}
-		else
-		{
-			
-			if(afterStart == NULL)
-			{
-				afterStart = nd;
-				afterEnd = nd;
-			}
-			else
-			{
-				afterEnd->next = nd;
-				afterEnd = nd;
-			}
-		}
+		content.push(p->data);
+		p = p->next;
+		q = q->next->next;
+	}
+	
+	if(q != NULL)
+	{
 		p = p->next;
 	}
-	beforeEnd->next = afterStart;
-	return beforeStart;
+	
+	while(p)
+	{
+		if(content.top() != p->data)
+			return false;
+		p = p->next;
+		content.pop();
+	}
+	
+	return true;
+
 }
 
 int main()
 {
-	int n = 10;
-	int a[] = {9, 8, 7, 6, 5, 4, 3, 2, 3, 1 };
-	node *head = init(a,n);
-	head = partition(head,4);
-	print(head);
+	string s;
+	cin>>s;
+	node *head = init(s,s.length());
+	cout<<"bulid the linklist successfully"<<endl;
+	s = (isPalindrome(head))? "True" : "False";
+	cout<<s<<endl;
 	return 0;
 }

@@ -1,31 +1,26 @@
 #include<iostream>
+#include<string>
 using namespace std;
 
-void reverse(char *s)
+void reverse(char* str)
 {
-	char *p = s,*q = s;
+	int len=0;
+	int i=0;
+	while(str[i] != '\0') i++;
+	len = i;
 	char c;
-	
-	while(*q)
-	{
-		q++;
+	for(i=0;i<len/2;i++){
+		c = str[i];
+		str[i] = str[len-1-i];
+		str[len-1-i] = c;
 	}
-	q--;
-		
-	while(p < q)
-	{
-		cout<<c<<endl;
-		c = *p;
-		*p = *q;
-		*q = c;
-		q--;
-		p++;
-	}
+	cout<<"end"<<endl;
 }
 
 int main()
 {
-	char s[] = "1234567";
-	reverse(s);
-	cout<<s<<endl;
+	char* str;
+	cin>>str;
+//	reverse(str);
+	return 0;
 }
